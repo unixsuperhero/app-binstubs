@@ -32,22 +32,43 @@ NOTES
 
   git) goto_repo; cat .git/config ;;
 
+  remotes) goto_repo; git remote -v ;;
+
   console | con | c)
     goto_repo
 
-    [[ $2 == 's' ]] && heroku run rails console -a $(app_name staging) && exit
-    [[ $2 == 'a' ]] && heroku run rails console -a $(app_name admin) && exit
-    [[ $2 == 'p' ]] && heroku run rails console -a $(app_name production) && exit
-    script/rails console && exit
+    [[ -z "$2" ]] && script/rails console && exit
+    heroku run rails console -a $(app_name "$2")
   ;;
 
   psql | pg | p)
     goto_repo
 
-    [[ $2 == 's' ]] && heroku pg:psql -a $(app_name staging) && exit
-    [[ $2 == 'a' ]] && heroku pg:psql -a $(app_name admin) && exit
-    [[ $2 == 'p' ]] && heroku pg:psql -a $(app_name production) && exit
-    psql ${APP_NAME}_development && exit
+    [[ -z "$2" ]] && psql ${APP_NAME}_development && exit
+    heroku pg:psql -a $(app_name "$2")
+  ;;
+
+  deploy | d)
+    goto_repo
+
+    [[ -z "$2" ]] && echo 'A <remote> is required when deploying.' && exit
+    git push $(app_name "$2") head
+    $0 migrate "$2"
+    $0 restart "$2"
+  ;;
+
+  restart | r)
+    goto_repo
+
+    [[ -z "$2" ]] && echo 'A <remote> is required when restarting.' && exit
+    heroku restart -a $(app_name "$2")
+  ;;
+
+  migrate | m)
+    goto_repo
+
+    [[ -z "$2" ]] && rake db:migrate && exit
+    heroku run rake db:migrate -a $(app_name "$2")
   ;;
 
   -e)
