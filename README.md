@@ -8,17 +8,25 @@ Repo Binstubs
 Generate binstubs for every app in my projects folder.  This is so I can do things like:
 
 * Open the heroku rails console:
-    proj1 console staging
+    baking_site console staging
 
 * Run scripts to deploy to production
-    proj2 deploy production
+    anime_site deploy production
+
+# Generate Binstubs
+
+    ./generate-binstubs /path/to/git_repos /path/to/bin_folder_in_PATH
+
+# Usage
 
 Here is the syntx:
-    <app_folder_name> <command> [<remote_name>]
 
-    <remote_name> refers to the remote in the app's .git/config
+    USAGE: $> <app> <command> [<remote>]
 
-    If no <remote_name> is given, it runs the local version:
+    <app> is the name of the app's folder
+    <command> the binstub command (console, deploy, psql, migrate, etc.)
+    <remote> refers to the remote in the app's .git/config
+
+    If no <remote> is given, it runs the local version:
 
       proj2 console  # $APP_DIR/script/rails console
-
