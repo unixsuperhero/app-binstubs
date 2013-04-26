@@ -5,10 +5,10 @@ then
   cat <<USAGE
 
   USAGE:
-    generate-binstubs <repo_dir> <bin_path>
+    generator <repo_dir> <bin_path>
 
   EXAMPLE:
-    generate-binstubs ~/github_repos ~/bin
+    generator ~/github_repos ~/bin
 
   ARGS:
     <repo_dir>
