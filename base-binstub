@@ -36,6 +36,13 @@ NOTES
 
   remotes) goto_repo; git remote -v ;;
 
+  logs | log | l)
+    goto_repo
+
+    [[ -z "$2" ]] && exit 1
+    heroku logs -t -a $(app_name "$2")
+  ;;
+
   console | con | c)
     goto_repo
 
