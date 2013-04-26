@@ -15,7 +15,7 @@ Generate binstubs for every app in my projects folder.  This is so I can do thin
 
 # Generate Binstubs
 
-    ./generate-binstubs /path/to/git_repos /path/to/bin_folder_in_PATH
+    ./generator /path/to/git_repos /path/to/bin_folder_in_PATH
 
 # Usage
 
@@ -30,3 +30,11 @@ Here is the syntx:
     If no <remote> is given, it runs the local version:
 
       proj2 console  # $APP_DIR/script/rails console
+
+# Commands
+
+* logs - view heroku logs
+* dir - echo the directory containing the app
+* console - start a heroku, or local, ruby console
+* etc...
+
