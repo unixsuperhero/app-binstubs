@@ -28,6 +28,8 @@ NOTES
 
   -edit | --edit) vim $0 ;;
 
+  dir) echo $APP_DIR ;;
+
   egit) goto_repo; vim .git/config ;;
 
   git) goto_repo; cat .git/config ;;
