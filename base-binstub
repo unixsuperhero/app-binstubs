@@ -3,7 +3,7 @@
 function goto_repo() {
   [[ $(pwd) == "${APP_DIR}" ]] && return 0
   cd ${APP_DIR}
-  [[ -f .rvmrc ]] && source .rvmrc
+  [[ -r .rvmrc ]] && source .rvmrc
 }
 
 function current_branch() {
