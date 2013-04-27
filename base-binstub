@@ -16,14 +16,7 @@ function app_name() {
 
 case $1 in
   '')
-    cat <<NOTES
-      USAGE: saveology [-e <file>]
-
-      What should the default behavior be?
-        cd to ${APP_DIR}?
-NOTES
-
-    goto_repo
+    echo $APP_DIR
   ;;
 
   -edit | --edit) vim $0 ;;
@@ -95,12 +88,26 @@ NOTES
     ERROR: UNKNOWN COMMAND
     ERROR: UNKNOWN COMMAND
 
-      USAGE: ${APP_NAME} [-e <file>]
+      USAGE: ${APP_NAME} <command> [*args = <remote> | <file>]
 
       What should the default behavior be?
         cd to ${APP_DIR}?
 
-    ERROR: UNKNOWN COMMAND
+      Commands
+        <no cmd> | dir      Show the directory where the app is located
+        -e                  Create or edit notes for this app
+        -edit | --edit      Edit this file: base-binstub
+        egit                Edit the .git/config file
+        git                 Show the .git/config file
+        remotes             List all configured remote repos
+        logs | log | l      Tail the heroku server logs
+        console | con | c   Open the rails shell
+        psql | pg | p       Open the postgres shell
+        deploy | d          Push code to remote servers, run migrations, and restart
+        restart | r         Restart the remote server
+        migrate | m         Run rake db:migrate
+
+    ERROR UNKNOWN COMMAND
     ERROR: UNKNOWN COMMAND
 NOTES
   ;;
