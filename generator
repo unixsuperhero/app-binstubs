@@ -63,7 +63,7 @@ INFO
 
 echo 'ensuring binstubs are accessible'
 cat <<setpath >>~/.bashrc
-export PATH=$2:$PATH
+export PATH=$2:\$PATH
 setpath
 
 echo "...done"
