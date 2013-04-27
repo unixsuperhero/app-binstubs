@@ -1,0 +1,1 @@
+sh generator $REPO_DIR/ ~/bin/app-binstubs

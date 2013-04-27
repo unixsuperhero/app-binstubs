@@ -63,7 +63,13 @@ INFO
 
 echo 'ensuring binstubs are accessible'
 cat <<setpath >>~/.bashrc
-export PATH=$2:\$PATH
+export HEROKU_BINSTUB_PATH="$2"
+export PATH="\$HEROKU_BINSTUB_PATH:\$PATH"
+
+function bcd() {
+  cd \$(\$(ls -1 "\$HEROKU_BINSTUB_PATH" | \
+    grep -i "*\$(echo "\$1" | sed 's/./&*/g')" | head -1))
+}
 setpath
 
 echo "...done"
