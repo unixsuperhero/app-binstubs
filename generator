@@ -47,7 +47,24 @@ do
   chmod +x "$2/$app_name"
 done
 
-cp -v "$(dirname $0)/base-binstub" "$2"/
+cat <<INFO
+Copying core functionality...
+
+If you plan on removing this folder,
+use the cp version of this.
+
+If you plan on keeping it,
+use the symlink version.
+
+INFO
+  #cp -v "$(dirname $0)/base-binstub" "$2"/
+  [[ -r "$2/base-binstub" ]] && rm "$2/base-binstub"
+  ln -s "$(dirname $0)/base-binstub" "$2"/
+
+echo 'ensuring binstubs are accessible'
+cat <<setpath >>~/.bashrc
+export PATH=$2:$PATH
+setpath
 
 echo "...done"
 
