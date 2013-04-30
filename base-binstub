@@ -78,9 +78,8 @@ case $1 in
   ;;
 
   -e)
-    cd ~/lists
     args=()
-    for i ({2..$#@}) args[$(( $i - 1 ))]="apps/${APP_NAME}/$@[$i]"
+    for i ({2..$#@}) args[$(( $i - 1 ))]="$HOME/lists/apps/${APP_NAME}/$@[$i]"
 
     echo "Make any missing directories"
     for f ($args) mkdir -pv $(dirname $f)
@@ -107,6 +106,7 @@ case $1 in
         logs | log | l      Tail the heroku server logs
         console | con | c   Open the rails shell
         psql | pg | p       Open the postgres shell
+        origin              Push code to the origin remote repo
         deploy | d          Push code to remote servers, run migrations, and restart
         restart | r         Restart the remote server
         migrate | m         Run rake db:migrate
