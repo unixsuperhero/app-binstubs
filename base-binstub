@@ -50,11 +50,15 @@ case $1 in
     heroku pg:psql -a $(app_name "$2")
   ;;
 
+  origin)
+    git push origin head
+  ;;
+
   deploy | d)
     goto_repo
 
     [[ -z "$2" ]] && echo 'A <remote> is required when deploying.' && exit
-    git push $(app_name "$2") head
+    git push "$2" head
     $0 migrate "$2"
     $0 restart "$2"
   ;;
