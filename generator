@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "\$0 = $0"
+
 if [ -z "$1" -o -z "$2" ]
 then
   cat <<USAGE
@@ -57,19 +59,30 @@ If you plan on keeping it,
 use the symlink version.
 
 INFO
+copy_base() {
   #cp -v "$(dirname $0)/base-binstub" "$2"/
-  [[ -r "$2/base-binstub" ]] && rm "$2/base-binstub"
-  ln -s "$(dirname $0)/base-binstub" "$2"/
+  [[ -L "$2/base-binstub" ]] && rm "$2/base-binstub"
+  [[ -a "$2/base-binstub" ]] && rm "$2/base-binstub"
+  ln -s "$(pwd)/base-binstub" "$2"/
+}
+
+copy_base "$(dirname $0)" "$2"
 
 echo 'ensuring binstubs are accessible'
-cat <<setpath >>~/.bashrc
-export HEROKU_BINSTUB_PATH="$2"
-export PATH="\$HEROKU_BINSTUB_PATH:\$PATH"
 
-function bcd() {
-  cd \$(\$(ls -1 "\$HEROKU_BINSTUB_PATH" | \
-    grep -i "*\$(echo "\$1" | sed 's/./&*/g')" | head -1))
-}
+  cat <<setpath >>~/.bashrc.local
+  export HEROKU_BINSTUB_PATH="/Users/jearsh/bin/app-binstubs"
+  export PATH="\$HEROKU_BINSTUB_PATH:\$PATH"
+
+  function stub_search_string() {
+    echo ".*\$(echo "\$1" | sed 's/./&.*/g')"
+  }
+  function search_stubs() {
+    ls -1 "\$HEROKU_BINSTUB_PATH" | grep -i "\$(stub_search_string \$1)" | head -1
+  }
+  function bcd() {
+    cd \$(\$(search_stubs \$1))
+  }
 setpath
 
 echo "...done"
