@@ -21,6 +21,18 @@ case $1 in
 
   -edit | --edit) vim $0 ;;
 
+  server)
+    goto_repo
+    ruby script/rails "$@"
+  ;;
+
+
+  ss)
+    goto_repo
+    shift
+    ruby script/rails server "$@"
+  ;;
+
   dir) echo $APP_DIR ;;
 
   egit) goto_repo; vim .git/config ;;
