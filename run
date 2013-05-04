@@ -1,1 +1,3 @@
-sh generator $REPO_DIR/ ~/bin/app-binstubs
+export REPO_DIR=$HOME/hashrocket
+ls -l $(dirname $0)/generator
+sh $(dirname $0)/generator $REPO_DIR/ ~/bin/app-binstubs
