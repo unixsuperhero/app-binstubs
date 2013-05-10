@@ -42,6 +42,16 @@ do
   app_dir=$(pwd)
   app_name=$(basename "${app_dir}")
 
+  if which "$app_name" &>/dev/null
+  then
+    echo "binstub: $app_name"
+    echo "may name clash with:"
+    which -a "$app_name"
+    echo
+    read -p "Do you want to skip it? (default: n) [Yn] " skip
+    if [[ "$skip" =~ [Yy] ]]; then continue; fi
+  fi
+
   echo "Generating binstub for: ${app_name}..."
 
   generate_stub "$2" "$app_name" "$app_dir"
