@@ -35,7 +35,7 @@ export APP_DIR="$3"
 BINSTUB
 }
 
-find $1 -name '.git' | while read git_dir
+for git_dir in $(find $1 -name '.git')
 do
   cd $(dirname $git_dir)
 
@@ -49,10 +49,11 @@ do
     which -a "$app_name"
     echo
     read -p "Do you want to skip it? (default: n) [Yn] " skip
-    if [[ "$skip" =~ [Yy] ]]; then continue; fi
+    if [[ "$skip" =~ [Yy] ]]; then echo "Skipping ${app_name}..."; echo; continue; fi
   fi
 
   echo "Generating binstub for: ${app_name}..."
+  echo
 
   generate_stub "$2" "$app_name" "$app_dir"
   chmod +x "$2/$app_name"
