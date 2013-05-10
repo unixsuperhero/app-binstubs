@@ -35,10 +35,9 @@ export APP_DIR="$3"
 BINSTUB
 }
 
-
-find $1 -name '.git' | while read app
+find $1 -name '.git' | while read git_dir
 do
-  cd $(dirname $app)
+  cd $(dirname $git_dir)
 
   app_dir=$(pwd)
   app_name=$(basename "${app_dir}")
